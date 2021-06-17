@@ -6,6 +6,7 @@ import VmAllocationPolicy
 import VmThread
 import ClockThread
 from InstanceConfiguration import instanceConfigurationData
+from PrintLogs import printMessage
 
 
 class DatacenterBroker:
@@ -53,39 +54,50 @@ class DatacenterBroker:
     def createVmAndAssignCloudlet(self, cloudlet):
         if self.cloudletAllocationPolicy == "FirstComeFirstServe":
             for instanceType in self.instanceConfigurationData.keys():
-                if cloudlet.getHighestRamUsage() < self.instanceConfigurationData[instanceType][1]:
+                if cloudlet.getHighestRamUsage() + 3 < 0.9 * self.instanceConfigurationData[instanceType][1]:
 
                     if cloudlet.getPrevAllocatedVmType() is not None and instanceType == cloudlet.getPrevAllocatedVmType():
                         continue
 
-                    vmId = random.randint(1, 99999999)
+                    vmId = random.randint(1, 9999)
                     vmIdList = [vm.getId() for vm in self.vmList]
                     while vmId in vmIdList:
-                        vmId = random.randint(1, 99999999)
+                        vmId = random.randint(1, 9999)
 
                     vm = Vm.Vm(id=vmId, ram=instanceConfigurationData[instanceType][1],
                                mips=instanceConfigurationData[instanceType][0],
                                bw=instanceConfigurationData[instanceType][2],
                                type=instanceType)
 
-                    print("Created VM #{} of type {}".format(vm.getId(), vm.getType()))
+                    message = "[" + str(ClockThread.ClockThread.currentTime) + "] Created VM #" + str(vm.getId()) + " of type " + str(vm.getType())
+                    printMessage("VmAllocation", message)
 
                     vmAllocationPolicy = VmAllocationPolicy.VmAllocationPolicy(self.vmAllocationPolicy, self.hostList, vm, self.vmList)
                     vmAllocationPolicy.allocateHostToVm()
 
                     cloudlet.setAllocatedVmId(vm.getId())
-                    print("Cloudlet #{} assigned to VM #{}".format(cloudlet.getId(), vm.getId()))
+
+                    message = "[" + str(ClockThread.ClockThread.currentTime) + "] Cloudlet #" + str(cloudlet.getId()) + " assigned to VM #" + str(vm.getId())
+                    printMessage("CloudletAllocationAndMigration", message)
+
                     return
+
         elif self.cloudletAllocationPolicy == "LowestSpotScoreFirst":
             suitableInstanceTypes = []
             for instanceType in self.instanceConfigurationData.keys():
                 if cloudlet.getHighestRamUsage() < self.instanceConfigurationData[instanceType][1]:
 
-                    if cloudlet.getPrevAllocatedVmType() is not None and instanceType == cloudlet.getPrevAllocatedVmType() and cloudlet.getRunningOnDemand() == False:
-                        continue
+                    # if cloudlet.getPrevAllocatedVmType() is not None and instanceType == cloudlet.getPrevAllocatedVmType() and cloudlet.getRunningOnDemand() == False:
+                    #     continue
+
+                    if cloudlet.getPrevAllocatedVmType() is not None:
+                        if cloudlet.runningOnDemand == False and instanceType == cloudlet.getPrevAllocatedVmType():
+                            continue
+                        if self.instanceConfigurationData[instanceType][1] == self.instanceConfigurationData[cloudlet.getPrevAllocatedVmType()][1]:
+                            continue
 
                     suitableInstanceTypes.append(instanceType)
-
+            print("SUITABLE TYPES LENGTH", len(suitableInstanceTypes))
             migrationTime = 0
             if len(cloudlet.getRuntimeDistributionOnVm()) > 0:
                migrationTime = cloudlet.getRuntimeDistributionOnVm()[len(cloudlet.getRuntimeDistributionOnVm())-1][1]
@@ -103,20 +115,24 @@ class DatacenterBroker:
             else:
                 cloudlet.setRunningOnDemand(False)
 
-            vmId = random.randint(1, 99999999)
+            vmId = random.randint(1, 9999)
             vmIdList = [vm.getId() for vm in self.vmList]
             while vmId in vmIdList:
-                vmId = random.randint(1, 99999999)
+                vmId = random.randint(1, 9999)
 
             vm = Vm.Vm(id=vmId, ram=instanceConfigurationData[instanceTypeWithMinSpotScore][1],
                        mips=instanceConfigurationData[instanceTypeWithMinSpotScore][0],
                        bw=instanceConfigurationData[instanceTypeWithMinSpotScore][2],
                        type=instanceTypeWithMinSpotScore)
 
+            message = "[" + str(ClockThread.ClockThread.currentTime) + "] Created VM #" + str(vm.getId()) + " of type " + str(vm.getType())
+            printMessage("VmAllocation", message)
+
             vmAllocationPolicy = VmAllocationPolicy.VmAllocationPolicy(self.vmAllocationPolicy, self.hostList, vm, self.vmList)
             vmAllocationPolicy.allocateHostToVm()
 
             cloudlet.setAllocatedVmId(vm.getId())
 
-            print("Cloudlet #{} assigned to VM #{}".format(cloudlet.getId(), vm.getId()))
+            message = "[" + str(ClockThread.ClockThread.currentTime) + "] Cloudlet #" + str(cloudlet.getId()) + " assigned to VM #" + str(vm.getId())
+            printMessage("CloudletAllocationAndMigration", message)
             return

@@ -1,6 +1,8 @@
 import threading
 import numpy as np
 
+from PrintLogs import printMessage
+
 class ClockThread:
 
     currentTime = 0
@@ -12,7 +14,7 @@ class ClockThread:
         self.cloudletAllocationPolicy = cloudletAllocationPolicy
 
     def init(self):
-        while len(self.vmList) > 0:
+        while len(self.vmList) > 0 or len([cloudlet for cloudlet in self.cloudletList if cloudlet.getLength() > 0]) > 0:
             threadList = []
             for cloudlet in self.cloudletList:
                 threadList.append(threading.Thread(target=self.clockTick, args=[cloudlet]))
@@ -26,6 +28,7 @@ class ClockThread:
             ClockThread.currentTime += 1
 
     def clockTick(self, cloudlet):
+
         if cloudlet.getLength() == 0:
             cloudlet.setAllocatedVmId(None)
             cloudlet.setPrevAllocatedVmType(None)
@@ -41,8 +44,10 @@ class ClockThread:
 
         currentRam = self.getCurrentRam(cloudlet.getHighestRamUsage())
 
-        if 0.1 * currentVm.getRam() > currentRam or currentRam > 0.9 * currentVm.getRam():
-            print("Ram utilisation threshold reached. Migrating cloudlet #{}".format(cloudlet.getId()))
+        if currentRam > 0.9 * currentVm.getRam():
+            message = "[" + str(ClockThread.currentTime) + "] Ram utilisation threshold reached. Migrating cloudlet #" + str(cloudlet.getId())+".Ram of CurrentAllocated Vm is "+ str(currentVm.getRam())+" Current Ram of cloudlet "+ str(currentRam)
+            printMessage("CloudletAllocationAndMigration", message)
+
             cloudlet.setAllocatedVmId(None)
             cloudlet.setPrevAllocatedVmType(currentVm.getType())
             cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime)
@@ -63,14 +68,18 @@ class ClockThread:
                         instanceTypeWithMinSpotScore = instanceType
 
                 if float(self.configurationData[instanceTypeWithMinSpotScore][4][int(ClockThread.currentTime/60)]) < self.configurationData[currentVm.getType()][3]:
-                    print("Migrating Cloudlet #{} from on-demand vm #{} ".format(cloudlet.getId(),currentVm.getType()))
+                    message = "[" + str(ClockThread.currentTime) + "] Migrating Cloudlet #" + str(cloudlet.getId()) + "from on demand vm #" + str(currentVm.getType()) + " to spot instance"
+                    printMessage("CloudletAllocationAndMigration", message)
+                    print("7")
                     cloudlet.setAllocatedVmId(None)
                     cloudlet.setPrevAllocatedVmType(currentVm.getType())
                     cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, True)
                     return
             else:
                 if float(self.configurationData[currentVm.getType()][4][int(ClockThread.currentTime/60)]) > self.configurationData[currentVm.getType()][3]:
-                    print("Vm #{} spot price has exceeded on-demand price. Migrating Cloudlet #{}".format(currentVm.getId(), cloudlet.getId()))
+                    message = "[" + str(ClockThread.currentTime) + "] Vm #" + str(currentVm.getId()) + " spot price has exceeded on-demand price. Migrating Cloudlet #" + str(cloudlet.getId())
+                    printMessage("CloudletAllocationAndMigration", message)
+                    print("8")
                     cloudlet.setAllocatedVmId(None)
                     cloudlet.setPrevAllocatedVmType(currentVm.getType())
                     cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime)
@@ -80,11 +89,15 @@ class ClockThread:
         cloudletUpdatedLength = cloudletUpdatedLength if cloudletUpdatedLength > 0 else 0
         if cloudletUpdatedLength == 0:
             cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime)
-            print("Cloudlet #{} has finished execution".format(cloudlet.getId()))
+
+            message = "[" + str(ClockThread.currentTime) + "] Cloudlet #" + str(cloudlet.getId()) + " has finished execution."
+            printMessage("FinishedExecution", message)
+
         cloudlet.setLength(cloudletUpdatedLength)
 
+
     def getCurrentRam(self, averageRamUsage):
-        val = np.random.normal(loc=averageRamUsage,size=1)
+        val = np.random.normal(loc=averageRamUsage, size=1)
         while val[0] <= 0:
-            val = np.random.normal(loc=averageRamUsage,size=1)
+            val = np.random.normal(loc=averageRamUsage, size=1)
         return val[0]

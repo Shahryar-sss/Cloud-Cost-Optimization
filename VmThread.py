@@ -1,6 +1,8 @@
 import threading
 
 import DatacenterBroker
+from PrintLogs import printMessage
+import ClockThread
 
 class VmThread:
 
@@ -24,18 +26,19 @@ class VmThread:
                     continue
 
                 self.vmList.remove(vm)
-                print("VM #{} removed from host #{}".format(vm.getId(), vm.getAllocatedHostId()))
+                message = "[" + str(ClockThread.ClockThread.currentTime) + "] VM #" + str(vm.getId()) + " removed from host #" + str(vm.getAllocatedHostId())
+                printMessage("VmAllocation", message)
+
                 for host in self.hostList:
                     if host.getId() == vm.getAllocatedHostId():
                         host.setAvailableRam(host.getAvailableRam() + vm.getRam())
-                        print("Available ram in host #{} is {}GB".format(host.getId(), host.getAvailableRam()))
-
+                        message = "[" + str(ClockThread.ClockThread.currentTime) + "] Available ram in host #" + str(host.getId()) + " is " + str(host.getAvailableRam()) + "GB"
+                        printMessage("VmAllocation", message)
 
             unassignedCloudlets = [cloudlet for cloudlet in self.cloudletList if cloudlet.getAllocatedVmId() is None]
             for cloudlet in unassignedCloudlets:
                 if cloudlet.getLength() == 0:
                     continue
 
-                print("Migrating cloudlet #{} to new VM".format(cloudlet.getId()))
                 DatacenterBroker.DatacenterBroker.createVmAndAssignCloudlet(self.brokerReference, cloudlet)
         return

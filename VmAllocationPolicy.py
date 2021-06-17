@@ -1,3 +1,6 @@
+from PrintLogs import printMessage
+import ClockThread
+
 class VmAllocationPolicy:
 
     def __init__(self, vmAllocationPolicyName, hostList, vm, vmList):
@@ -17,8 +20,14 @@ class VmAllocationPolicy:
                 self.vm.setAllocatedHostId(host.getId())
                 self.vmList.append(self.vm)
                 host.setAvailableRam(host.getAvailableRam() - self.vm.getRam())
-                print("VM #{} mapped to host #{}".format(self.vm.getId(), host.getId()))
-                print("Available ram in host #{} is {}".format(host.getId(), host.getAvailableRam()))
+
+                message = "[" + str(ClockThread.ClockThread.currentTime) + "] VM #" + str(self.vm.getId()) + " assigned to host #" + str(host.getId())
+                printMessage("VmAllocation", message)
+
+                message = "[" + str(ClockThread.ClockThread.currentTime) + "] Available ram in host #" + str(host.getId()) + " is " + str(host.getAvailableRam())
+                printMessage("VmAllocation", message)
                 return
 
-        print("Could not allocate {}. No host with sufficient ram is available".format(self.vm.getId()))
+        message = "[" + str(ClockThread.ClockThread.currentTime) + "] Could not allocate #" + str(self.vm.getId()) + ". No host with sufficient ram is available"
+        printMessage("VmAllocation", message)
+
