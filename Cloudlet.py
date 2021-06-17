@@ -7,8 +7,9 @@ class Cloudlet:
         self.length = length
 
         self.allocatedVmId = None
-        self.costAcquired = 0.0
         self.prevAllocatedVmType = None
+        self.runtimeDistributionOnVm = []
+        self.runningOnDemand = False
 
     def getId(self):
         return self.id
@@ -22,8 +23,11 @@ class Cloudlet:
     def getAverageRamUsage(self):
         return self.averageRamUsage
 
-    def getcostAcquired(self):
-        return self.costAcquired
+    def getRuntimeDistributionOnVm(self):
+        return self.runtimeDistributionOnVm
+
+    def getRunningOnDemand(self):
+        return self.runningOnDemand
 
     def getPrevAllocatedVmType(self):
         return self.prevAllocatedVmType
@@ -37,8 +41,11 @@ class Cloudlet:
     def setAllocatedVmId(self, allocatedVmId):
         self.allocatedVmId = allocatedVmId
 
-    def setcostAcquired(self,costAcquired):
-        self.costAcquired=costAcquired
+    def setRunningOnDemand(self, runningOnDemand):
+        self.runningOnDemand = runningOnDemand
+
+    def setRuntimeDistributionOnVm(self, vmType, runtimeOnVm, ondemand = False):
+        self.runtimeDistributionOnVm.append((vmType, runtimeOnVm, ondemand))
 
     def setPrevAllocatedVmType(self, prevAllocatedVmType):
         self.prevAllocatedVmType = prevAllocatedVmType

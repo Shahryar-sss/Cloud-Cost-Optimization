@@ -39,13 +39,16 @@ class DatacenterBroker:
             thread.join()
 
         self.vmThread = VmThread.VmThread(self.hostList, self.vmList, self.cloudletList, self)
-        self.clockThread = ClockThread.ClockThread(self.vmList, self.cloudletList, self.instanceConfigurationData)
+        self.clockThread = ClockThread.ClockThread(self.vmList, self.cloudletList, self.instanceConfigurationData, self.cloudletAllocationPolicy)
 
         t1 = threading.Thread(target=self.vmThread.init)
         t2 = threading.Thread(target=self.clockThread.init)
 
         t1.start()
         t2.start()
+
+        t1.join()
+        t2.join()
 
     def createVmAndAssignCloudlet(self, cloudlet):
         if self.cloudletAllocationPolicy == "FirstComeFirstServe":
@@ -73,3 +76,47 @@ class DatacenterBroker:
                     cloudlet.setAllocatedVmId(vm.getId())
                     print("Cloudlet #{} assigned to VM #{}".format(cloudlet.getId(), vm.getId()))
                     return
+        elif self.cloudletAllocationPolicy == "LowestSpotScoreFirst":
+            suitableInstanceTypes = []
+            for instanceType in self.instanceConfigurationData.keys():
+                if cloudlet.getHighestRamUsage() < self.instanceConfigurationData[instanceType][1]:
+
+                    if cloudlet.getPrevAllocatedVmType() is not None and instanceType == cloudlet.getPrevAllocatedVmType() and cloudlet.getRunningOnDemand() == False:
+                        continue
+
+                    suitableInstanceTypes.append(instanceType)
+
+            migrationTime = 0
+            if len(cloudlet.getRuntimeDistributionOnVm()) > 0:
+               migrationTime = cloudlet.getRuntimeDistributionOnVm()[len(cloudlet.getRuntimeDistributionOnVm())-1][1]
+
+            minSpotScore = float("inf")
+            instanceTypeWithMinSpotScore = None
+            for instanceType in suitableInstanceTypes:
+                if float(self.instanceConfigurationData[instanceType][5][int(migrationTime/60)]) < minSpotScore:
+                    minSpotScore=float(self.instanceConfigurationData[instanceType][5][int(migrationTime/60)])
+                    instanceTypeWithMinSpotScore = instanceType
+
+            if cloudlet.getPrevAllocatedVmType() is not None and float(self.instanceConfigurationData[instanceTypeWithMinSpotScore][4][int(migrationTime/60)]) > self.instanceConfigurationData[cloudlet.getPrevAllocatedVmType()][3]:
+                cloudlet.setRunningOnDemand(True)
+                instanceTypeWithMinSpotScore = cloudlet.getPrevAllocatedVmType()
+            else:
+                cloudlet.setRunningOnDemand(False)
+
+            vmId = random.randint(1, 99999999)
+            vmIdList = [vm.getId() for vm in self.vmList]
+            while vmId in vmIdList:
+                vmId = random.randint(1, 99999999)
+
+            vm = Vm.Vm(id=vmId, ram=instanceConfigurationData[instanceTypeWithMinSpotScore][1],
+                       mips=instanceConfigurationData[instanceTypeWithMinSpotScore][0],
+                       bw=instanceConfigurationData[instanceTypeWithMinSpotScore][2],
+                       type=instanceTypeWithMinSpotScore)
+
+            vmAllocationPolicy = VmAllocationPolicy.VmAllocationPolicy(self.vmAllocationPolicy, self.hostList, vm, self.vmList)
+            vmAllocationPolicy.allocateHostToVm()
+
+            cloudlet.setAllocatedVmId(vm.getId())
+
+            print("Cloudlet #{} assigned to VM #{}".format(cloudlet.getId(), vm.getId()))
+            return
