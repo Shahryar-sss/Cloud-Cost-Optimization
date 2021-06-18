@@ -5,13 +5,12 @@ import Vm
 import VmAllocationPolicy
 import VmThread
 import ClockThread
-from InstanceConfiguration import instanceConfigurationData
 from PrintLogs import printMessage
 
 
 class DatacenterBroker:
 
-    def __init__(self, name, id, datacenter, vmAllocationPolicy, cloudletAllocationPolicy):
+    def __init__(self, name, id, datacenter, vmAllocationPolicy, cloudletAllocationPolicy, instanceConfigurationData):
         self.id = id
         self.name = name
         self.datacenter = datacenter
@@ -54,19 +53,24 @@ class DatacenterBroker:
     def createVmAndAssignCloudlet(self, cloudlet):
         if self.cloudletAllocationPolicy == "FirstComeFirstServe":
             for instanceType in self.instanceConfigurationData.keys():
-                if cloudlet.getHighestRamUsage() + 3 < 0.9 * self.instanceConfigurationData[instanceType][1]:
+                if cloudlet.getHighestRamUsage() < self.instanceConfigurationData[instanceType][1]:
 
-                    if cloudlet.getPrevAllocatedVmType() is not None and instanceType == cloudlet.getPrevAllocatedVmType():
-                        continue
+                    if cloudlet.getPrevAllocatedVmType() is not None:
+                        if instanceType == cloudlet.getPrevAllocatedVmType() \
+                                and cloudlet.getMigrationEvent() == "RAM" \
+                                and self.instanceConfigurationData[instanceType][1] \
+                                <= self.instanceConfigurationData[cloudlet.getPrevAllocatedVmType()][1]:
+
+                            continue
 
                     vmId = random.randint(1, 9999)
                     vmIdList = [vm.getId() for vm in self.vmList]
                     while vmId in vmIdList:
                         vmId = random.randint(1, 9999)
 
-                    vm = Vm.Vm(id=vmId, ram=instanceConfigurationData[instanceType][1],
-                               mips=instanceConfigurationData[instanceType][0],
-                               bw=instanceConfigurationData[instanceType][2],
+                    vm = Vm.Vm(id=vmId, ram=self.instanceConfigurationData[instanceType][1],
+                               mips=self.instanceConfigurationData[instanceType][0],
+                               bw=self.instanceConfigurationData[instanceType][2],
                                type=instanceType)
 
                     message = "[" + str(ClockThread.ClockThread.currentTime) + "] Created VM #" + str(vm.getId()) + " of type " + str(vm.getType())
@@ -87,17 +91,16 @@ class DatacenterBroker:
             for instanceType in self.instanceConfigurationData.keys():
                 if cloudlet.getHighestRamUsage() < self.instanceConfigurationData[instanceType][1]:
 
-                    # if cloudlet.getPrevAllocatedVmType() is not None and instanceType == cloudlet.getPrevAllocatedVmType() and cloudlet.getRunningOnDemand() == False:
-                    #     continue
-
                     if cloudlet.getPrevAllocatedVmType() is not None:
-                        if cloudlet.runningOnDemand == False and instanceType == cloudlet.getPrevAllocatedVmType():
+                        if not cloudlet.runningOnDemand and instanceType == cloudlet.getPrevAllocatedVmType():
                             continue
-                        if self.instanceConfigurationData[instanceType][1] == self.instanceConfigurationData[cloudlet.getPrevAllocatedVmType()][1]:
+                        if cloudlet.getMigrationEvent() == "RAM" \
+                                and self.instanceConfigurationData[instanceType][1] \
+                                <= self.instanceConfigurationData[cloudlet.getPrevAllocatedVmType()][1]:
                             continue
 
                     suitableInstanceTypes.append(instanceType)
-            print("SUITABLE TYPES LENGTH", len(suitableInstanceTypes))
+
             migrationTime = 0
             if len(cloudlet.getRuntimeDistributionOnVm()) > 0:
                migrationTime = cloudlet.getRuntimeDistributionOnVm()[len(cloudlet.getRuntimeDistributionOnVm())-1][1]
@@ -120,9 +123,9 @@ class DatacenterBroker:
             while vmId in vmIdList:
                 vmId = random.randint(1, 9999)
 
-            vm = Vm.Vm(id=vmId, ram=instanceConfigurationData[instanceTypeWithMinSpotScore][1],
-                       mips=instanceConfigurationData[instanceTypeWithMinSpotScore][0],
-                       bw=instanceConfigurationData[instanceTypeWithMinSpotScore][2],
+            vm = Vm.Vm(id=vmId, ram=self.instanceConfigurationData[instanceTypeWithMinSpotScore][1],
+                       mips=self.instanceConfigurationData[instanceTypeWithMinSpotScore][0],
+                       bw=self.instanceConfigurationData[instanceTypeWithMinSpotScore][2],
                        type=instanceTypeWithMinSpotScore)
 
             message = "[" + str(ClockThread.ClockThread.currentTime) + "] Created VM #" + str(vm.getId()) + " of type " + str(vm.getType())

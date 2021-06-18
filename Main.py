@@ -3,6 +3,8 @@ import Datacenter
 import DatacenterBroker
 import Host
 import Cloudlet
+from PrintLogs import printMessage
+from InstanceConfiguration import instanceConfigurationData
 
 class Main:
 
@@ -18,8 +20,8 @@ class Main:
 
         datacenter.setHostList(hostlist)
 
-        broker1 = DatacenterBroker.DatacenterBroker("Broker1", 0, datacenter ,"FirstComeFirstServe", "FirstComeFirstServe")
-        broker2 = DatacenterBroker.DatacenterBroker("Broker2", 1, datacenter ,"FirstComeFirstServe", "LowestSpotScoreFirst")
+        broker1 = DatacenterBroker.DatacenterBroker("Broker1", 0, datacenter ,"FirstComeFirstServe", "FirstComeFirstServe", instanceConfigurationData)
+        broker2 = DatacenterBroker.DatacenterBroker("Broker2", 1, datacenter ,"FirstComeFirstServe", "LowestSpotScoreFirst", instanceConfigurationData)
 
         cloudletList = []
 
@@ -27,16 +29,16 @@ class Main:
         demand = demandFile.readlines()[1]
         demandParams = demand.split(",")
 
-        cloudletList.append(Cloudlet.Cloudlet(id=1, highestRamUsage=1.604003906, averageRamUsage=0.009488242, length=7939638879))
+        cloudletList.append(Cloudlet.Cloudlet(id=1, highestRamUsage=1.604003906, averageRamUsage=1.604003906, length=7939638879))
+        cloudletList.append(Cloudlet.Cloudlet(id=2, highestRamUsage=2.62109375, averageRamUsage=2.62109375, length=3177483209))
 
-        broker2.submitCloudletList(cloudletList)
-        # broker2.submitCloudletList(cloudletList2)
+        broker1.submitCloudletList(cloudletList)
 
         for cloudlet in cloudletList:
-            print("Cloudlet ID #{}".format(cloudlet.getId()))
-            print("VM ID\t\tEnd Time\t\tInstance Type")
+            printMessage("FinishedExecution", "\nCloudlet ID #" + str(cloudlet.getId()))
+            printMessage("FinishedExecution", "VM TYPE\t\tEnd Time\t\tInstance Type")
             for item in cloudlet.getRuntimeDistributionOnVm():
-                print("{}\t\t{}\t\t{}".format(item[0], item[1], "Spot" if item[2] == False else "On Demand"))
+                printMessage("FinishedExecution", str(item[0]) + "\t\t" + str(item[1]) + (" " * (4 - len(str(item[1])))) + "\t\t" + ("Spot" if not item[2] else "On Demand"))
 
     def createDatacenter(self, name):
         datacenterCharacteristics = DatacenterCharacteristics.DatacenterCharacteristics("x86", "Linux", "Xen", "Asia/Kolkata")

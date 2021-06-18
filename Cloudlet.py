@@ -10,6 +10,7 @@ class Cloudlet:
         self.prevAllocatedVmType = None
         self.runtimeDistributionOnVm = []
         self.runningOnDemand = False
+        self.migrationEvent = None
 
     def getId(self):
         return self.id
@@ -35,6 +36,9 @@ class Cloudlet:
     def getLength(self):
         return self.length
 
+    def getMigrationEvent(self):
+        return self.migrationEvent
+
     def setLength(self, length):
         self.length = length
 
@@ -49,3 +53,6 @@ class Cloudlet:
 
     def setPrevAllocatedVmType(self, prevAllocatedVmType):
         self.prevAllocatedVmType = prevAllocatedVmType
+
+    def setMigrationEvent(self, migrationEvent):
+        self.migrationEvent = migrationEvent
