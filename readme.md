@@ -57,4 +57,4 @@ This thread constantly monitors the running cloudlet, and on **every clock tick*
 
 <hr/>
 
-The output of the prohram is printed to the console window.
+The output of the program is printed to the console window.
