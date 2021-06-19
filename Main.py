@@ -5,6 +5,7 @@ import Host
 import Cloudlet
 from PrintLogs import printMessage
 from InstanceConfiguration import instanceConfigurationData
+import ClockThread
 
 class Main:
 
@@ -20,31 +21,42 @@ class Main:
 
         datacenter.setHostList(hostlist)
 
-        broker1 = DatacenterBroker.DatacenterBroker("Broker1", 0, datacenter ,"FirstComeFirstServe", "FirstComeFirstServe", instanceConfigurationData)
-        broker2 = DatacenterBroker.DatacenterBroker("Broker2", 1, datacenter ,"FirstComeFirstServe", "LowestSpotScoreFirst", instanceConfigurationData)
+        broker1 = DatacenterBroker.DatacenterBroker("Broker1", 0, datacenter, "FirstComeFirstServe", "FirstComeFirstServe", instanceConfigurationData)
+        broker2 = DatacenterBroker.DatacenterBroker("Broker2", 1, datacenter, "FirstComeFirstServe", "LowestSpotScoreFirst", instanceConfigurationData)
 
         cloudletList = []
 
-        demandFile = open("./Dataset/DemandData.csv",'r')
+        demandFile = open("./Dataset/DemandDataMerged.csv",'r')
         demands = demandFile.readlines()[1:]
         demandParams = [demand.split(",") for demand in demands]
 
-        cloudletList.append(Cloudlet.Cloudlet(id=1, highestRamUsage=1.604003906, averageRamUsage=1.604003906, length=9939638879))
-        # cloudletList.append(Cloudlet.Cloudlet(id=2, highestRamUsage=2.62109375, averageRamUsage=2.62109375, length=3177483209))
+        for item in demandParams:
+            cloudletList.append(Cloudlet.Cloudlet(id=demandParams.index(item), highestRamUsage=float(item[2]), averageRamUsage=float(item[3]), length=float(item[1])))
 
         broker2.submitCloudletList(cloudletList)
 
         for cloudlet in cloudletList:
-            printMessage("FinishedExecution", "\nCloudlet ID #" + str(cloudlet.getId()))
-            printMessage("FinishedExecution", "VM TYPE\t\tEnd Time\t\tInstance Type\t\tMigration Event")
-            for item in cloudlet.getRuntimeDistributionOnVm():
-                printMessage("FinishedExecution", str(item[0]) + "\t\t" + str(item[1]) + (" " * (4 - len(str(item[1])))) + "\t\t" + ("Spot" if not item[2] else "On Demand") + "\t\t\t\t" + item[3])
+            printMessage("OutputTables", "Cloudlet ID #" + str(cloudlet.getId()))
+            printMessage("OutputTables", "VM TYPE\t\t\t\tEnd Time\tInstance Type\t\tMigration Event\t\tCost")
+            tempRuntime=cloudlet.getRuntimeDistributionOnVm()
+            for i in range(len(tempRuntime)):
+
+                timeSpentOnVM = tempRuntime[i][1]-tempRuntime[i-1][1] if i > 0 else tempRuntime[i][1]
+                startTime = tempRuntime[i-1][1] if i>0 else tempRuntime[i][1]
+
+                costOnVM = 0
+                for j in range(1, int(timeSpentOnVM/3600)+1):
+                    costOnVM += float(instanceConfigurationData[tempRuntime[i][0]][4][int(startTime/60) + j*60])
+
+                costOnVM += timeSpentOnVM % 3600 * float(instanceConfigurationData[tempRuntime[i][0]][4][int(timeSpentOnVM/60+startTime/60)]) / 3600
+
+                printMessage("OutputTables", str(tempRuntime[i][0]) + (" " * (12 - len(str(tempRuntime[i][0])))) + "\t\t\t" + str(tempRuntime[i][1]) + (" " * (4 - len(str(tempRuntime[i][1])))) + "\t\t" + ("Spot" if not tempRuntime[i][2] else "On Demand") + "\t\t\t\t" + tempRuntime[i][3] + (" " * (9 - len(tempRuntime[i][3]))) + "\t\t" + str(costOnVM))
+            printMessage("OutputTables", "\n")
 
     def createDatacenter(self, name):
         datacenterCharacteristics = DatacenterCharacteristics.DatacenterCharacteristics("x86", "Linux", "Xen", "Asia/Kolkata")
         datacenter = Datacenter.Datacenter(name, datacenterCharacteristics)
         return datacenter
-
 
 t = Main()
 t.test()

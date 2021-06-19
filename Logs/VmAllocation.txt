@@ -1,30 +1,378 @@
-[0] Created VM #2011 of type a1.medium
-[0] VM #2011 assigned to host #0
+[0] Created VM #9703 of type a1.medium
+[0] VM #9703 assigned to host #0
 [0] Available ram in host #0 is 1022.0
-[2] VM #2011 removed from host #0
-[2] Available ram in host #0 is 1024.0GB
-[2] Created VM #2807 of type a1.large
-[2] VM #2807 assigned to host #0
-[2] Available ram in host #0 is 1020.0
-[49] VM #2807 removed from host #0
-[49] Available ram in host #0 is 1024.0GB
-[49] Created VM #7657 of type a1.xlarge
-[50] VM #7657 assigned to host #0
-[51] Available ram in host #0 is 1016.0
-[3648] Created VM #3888 of type a1.medium
-[3648] VM #3888 assigned to host #0
-[3649] Available ram in host #0 is 1014.0
-[3650] VM #7657 removed from host #0
-[3650] Available ram in host #0 is 1022.0GB
-[3651] Created VM #918 of type a1.large
-[3651] VM #918 assigned to host #0
-[3652] Available ram in host #0 is 1018.0
-[3652] VM #3888 removed from host #0
-[3652] Available ram in host #0 is 1020.0GB
-[3704] VM #918 removed from host #0
-[3704] Available ram in host #0 is 1024.0GB
-[3704] Created VM #1041 of type a1.xlarge
-[3704] VM #1041 assigned to host #0
-[3704] Available ram in host #0 is 1016.0
-[4331] VM #1041 removed from host #0
-[4332] Available ram in host #0 is 1024.0GB
+[87] Created VM #6764 of type a1.2xlarge
+[87] VM #6764 assigned to host #0
+[88] Available ram in host #0 is 1006.0
+[88] VM #9703 removed from host #0
+[89] Available ram in host #0 is 1008.0GB
+[3454] VM #6764 removed from host #0
+[3455] Available ram in host #0 is 1024.0GB
+[0] Created VM #3306 of type a1.large
+[0] VM #3306 assigned to host #0
+[0] Available ram in host #0 is 1020.0
+[1382] VM #3306 removed from host #0
+[1382] Available ram in host #0 is 1024.0GB
+[0] Created VM #4286 of type a1.xlarge
+[0] VM #4286 assigned to host #0
+[0] Available ram in host #0 is 1016.0
+[3305] VM #4286 removed from host #0
+[3306] Available ram in host #0 is 1024.0GB
+[0] Created VM #2188 of type a1.xlarge
+[0] VM #2188 assigned to host #0
+[0] Available ram in host #0 is 1016.0
+[2396] VM #2188 removed from host #0
+[2397] Available ram in host #0 is 1024.0GB
+[0] Created VM #9802 of type a1.xlarge
+[0] VM #9802 assigned to host #0
+[0] Available ram in host #0 is 1016.0
+[30] Created VM #2554 of type a1.2xlarge
+[31] VM #2554 assigned to host #0
+[31] Available ram in host #0 is 1000.0
+[31] VM #9802 removed from host #0
+[32] Available ram in host #0 is 1008.0GB
+[558] VM #2554 removed from host #0
+[558] Available ram in host #0 is 1024.0GB
+[0] Created VM #6292 of type a1.xlarge
+[0] VM #6292 assigned to host #0
+[0] Available ram in host #0 is 1016.0
+[32] Created VM #2200 of type a1.2xlarge
+[32] VM #2200 assigned to host #0
+[32] Available ram in host #0 is 1000.0
+[34] VM #6292 removed from host #0
+[35] Available ram in host #0 is 1008.0GB
+[850] VM #2200 removed from host #0
+[851] Available ram in host #0 is 1024.0GB
+[0] Created VM #1360 of type a1.2xlarge
+[0] VM #1360 assigned to host #0
+[0] Available ram in host #0 is 1008.0
+[823] VM #1360 removed from host #0
+[823] Available ram in host #0 is 1024.0GB
+[823] Created VM #1230 of type m5zn.3xlarge
+[823] VM #1230 assigned to host #0
+[823] Available ram in host #0 is 976.0
+[1468] VM #1230 removed from host #0
+[1468] Available ram in host #0 is 1024.0GB
+[0] Created VM #5524 of type a1.2xlarge
+[0] VM #5524 assigned to host #0
+[0] Available ram in host #0 is 1008.0
+[48] VM #5524 removed from host #0
+[48] Available ram in host #0 is 1024.0GB
+[49] Created VM #1246 of type m5zn.3xlarge
+[49] VM #1246 assigned to host #0
+[49] Available ram in host #0 is 976.0
+[1512] VM #1246 removed from host #0
+[1512] Available ram in host #0 is 1024.0GB
+[0] Created VM #8075 of type a1.medium
+[0] VM #8075 assigned to host #0
+[0] Available ram in host #0 is 1022.0
+[1311] VM #8075 removed from host #0
+[1312] Available ram in host #0 is 1024.0GB
+[0] Created VM #3176 of type a1.xlarge
+[0] VM #3176 assigned to host #0
+[0] Available ram in host #0 is 1016.0
+[1100] VM #3176 removed from host #0
+[1101] Available ram in host #0 is 1024.0GB
+[0] Created VM #9332 of type m5zn.6xlarge
+[0] VM #9332 assigned to host #0
+[0] Available ram in host #0 is 928.0
+[31] Created VM #5830 of type m5d.8xlarge
+[31] VM #5830 assigned to host #0
+[32] Available ram in host #0 is 800.0
+[32] VM #9332 removed from host #0
+[33] Available ram in host #0 is 896.0GB
+[33] Created VM #7384 of type m5zn.6xlarge
+[33] VM #7384 assigned to host #0
+[33] Available ram in host #0 is 800.0
+[35] VM #5830 removed from host #0
+[35] Available ram in host #0 is 928.0GB
+[66] VM #7384 removed from host #0
+[66] Available ram in host #0 is 1024.0GB
+[66] Created VM #720 of type m5d.8xlarge
+[67] VM #720 assigned to host #0
+[67] Available ram in host #0 is 896.0
+[68] VM #720 removed from host #0
+[68] Available ram in host #0 is 1024.0GB
+[68] Created VM #9443 of type m5zn.6xlarge
+[68] VM #9443 assigned to host #0
+[69] Available ram in host #0 is 928.0
+[99] VM #9443 removed from host #0
+[100] Available ram in host #0 is 1024.0GB
+[100] Created VM #5154 of type m5d.8xlarge
+[101] VM #5154 assigned to host #0
+[101] Available ram in host #0 is 896.0
+[102] Created VM #5572 of type m5zn.6xlarge
+[103] VM #5572 assigned to host #0
+[103] Available ram in host #0 is 800.0
+[103] VM #5154 removed from host #0
+[104] Available ram in host #0 is 928.0GB
+[133] Created VM #5975 of type m5d.8xlarge
+[134] VM #5975 assigned to host #0
+[135] Available ram in host #0 is 800.0
+[135] VM #5572 removed from host #0
+[135] Available ram in host #0 is 896.0GB
+[135] Created VM #6106 of type m5zn.6xlarge
+[136] VM #6106 assigned to host #0
+[136] Available ram in host #0 is 800.0
+[136] VM #5975 removed from host #0
+[136] Available ram in host #0 is 928.0GB
+[168] VM #6106 removed from host #0
+[168] Available ram in host #0 is 1024.0GB
+[168] Created VM #7532 of type m5d.8xlarge
+[168] VM #7532 assigned to host #0
+[168] Available ram in host #0 is 896.0
+[170] VM #7532 removed from host #0
+[170] Available ram in host #0 is 1024.0GB
+[170] Created VM #6097 of type m5zn.6xlarge
+[170] VM #6097 assigned to host #0
+[170] Available ram in host #0 is 928.0
+[201] Created VM #6480 of type m5d.8xlarge
+[201] VM #6480 assigned to host #0
+[202] Available ram in host #0 is 800.0
+[202] VM #6097 removed from host #0
+[203] Available ram in host #0 is 896.0GB
+[203] Created VM #8202 of type m5zn.6xlarge
+[203] VM #8202 assigned to host #0
+[203] Available ram in host #0 is 800.0
+[203] VM #6480 removed from host #0
+[203] Available ram in host #0 is 928.0GB
+[234] Created VM #9462 of type m5d.8xlarge
+[234] VM #9462 assigned to host #0
+[235] Available ram in host #0 is 800.0
+[235] VM #8202 removed from host #0
+[235] Available ram in host #0 is 896.0GB
+[236] VM #9462 removed from host #0
+[236] Available ram in host #0 is 1024.0GB
+[236] Created VM #6325 of type m5zn.6xlarge
+[236] VM #6325 assigned to host #0
+[236] Available ram in host #0 is 928.0
+[269] Created VM #6456 of type m5d.8xlarge
+[269] VM #6456 assigned to host #0
+[269] Available ram in host #0 is 800.0
+[269] VM #6325 removed from host #0
+[269] Available ram in host #0 is 896.0GB
+[271] Created VM #9095 of type m5zn.6xlarge
+[271] VM #9095 assigned to host #0
+[272] Available ram in host #0 is 800.0
+[272] VM #6456 removed from host #0
+[273] Available ram in host #0 is 928.0GB
+[305] Created VM #176 of type m5d.8xlarge
+[305] VM #176 assigned to host #0
+[306] Available ram in host #0 is 800.0
+[306] VM #9095 removed from host #0
+[306] Available ram in host #0 is 896.0GB
+[307] Created VM #586 of type m5zn.6xlarge
+[307] VM #586 assigned to host #0
+[307] Available ram in host #0 is 800.0
+[308] VM #176 removed from host #0
+[308] Available ram in host #0 is 928.0GB
+[338] VM #586 removed from host #0
+[338] Available ram in host #0 is 1024.0GB
+[338] Created VM #1131 of type m5d.8xlarge
+[338] VM #1131 assigned to host #0
+[338] Available ram in host #0 is 896.0
+[339] Created VM #4819 of type m5zn.6xlarge
+[339] VM #4819 assigned to host #0
+[340] Available ram in host #0 is 800.0
+[340] VM #1131 removed from host #0
+[340] Available ram in host #0 is 928.0GB
+[370] Created VM #6490 of type m5d.8xlarge
+[370] VM #6490 assigned to host #0
+[371] Available ram in host #0 is 800.0
+[371] VM #4819 removed from host #0
+[371] Available ram in host #0 is 896.0GB
+[371] Created VM #8160 of type m5zn.6xlarge
+[371] VM #8160 assigned to host #0
+[372] Available ram in host #0 is 800.0
+[372] VM #6490 removed from host #0
+[372] Available ram in host #0 is 928.0GB
+[403] VM #8160 removed from host #0
+[403] Available ram in host #0 is 1024.0GB
+[403] Created VM #2013 of type m5d.8xlarge
+[403] VM #2013 assigned to host #0
+[403] Available ram in host #0 is 896.0
+[405] Created VM #2171 of type m5zn.6xlarge
+[405] VM #2171 assigned to host #0
+[405] Available ram in host #0 is 800.0
+[405] VM #2013 removed from host #0
+[406] Available ram in host #0 is 928.0GB
+[438] VM #2171 removed from host #0
+[438] Available ram in host #0 is 1024.0GB
+[438] Created VM #3252 of type m5d.8xlarge
+[438] VM #3252 assigned to host #0
+[438] Available ram in host #0 is 896.0
+[440] VM #3252 removed from host #0
+[440] Available ram in host #0 is 1024.0GB
+[441] Created VM #7173 of type m5zn.6xlarge
+[441] VM #7173 assigned to host #0
+[441] Available ram in host #0 is 928.0
+[475] VM #7173 removed from host #0
+[475] Available ram in host #0 is 1024.0GB
+[475] Created VM #7125 of type m5d.8xlarge
+[475] VM #7125 assigned to host #0
+[475] Available ram in host #0 is 896.0
+[477] Created VM #3881 of type m5zn.6xlarge
+[477] VM #3881 assigned to host #0
+[477] Available ram in host #0 is 800.0
+[478] VM #7125 removed from host #0
+[478] Available ram in host #0 is 928.0GB
+[508] VM #3881 removed from host #0
+[509] Available ram in host #0 is 1024.0GB
+[509] Created VM #222 of type m5d.8xlarge
+[509] VM #222 assigned to host #0
+[511] Available ram in host #0 is 896.0
+[512] Created VM #8755 of type m5zn.6xlarge
+[513] VM #8755 assigned to host #0
+[513] Available ram in host #0 is 800.0
+[514] VM #222 removed from host #0
+[515] Available ram in host #0 is 928.0GB
+[544] VM #8755 removed from host #0
+[545] Available ram in host #0 is 1024.0GB
+[545] Created VM #4928 of type m5d.8xlarge
+[545] VM #4928 assigned to host #0
+[545] Available ram in host #0 is 896.0
+[546] VM #4928 removed from host #0
+[547] Available ram in host #0 is 1024.0GB
+[547] Created VM #6676 of type m5zn.6xlarge
+[547] VM #6676 assigned to host #0
+[547] Available ram in host #0 is 928.0
+[579] VM #6676 removed from host #0
+[579] Available ram in host #0 is 1024.0GB
+[579] Created VM #4547 of type m5d.8xlarge
+[579] VM #4547 assigned to host #0
+[579] Available ram in host #0 is 896.0
+[581] Created VM #6394 of type m5zn.6xlarge
+[581] VM #6394 assigned to host #0
+[581] Available ram in host #0 is 800.0
+[582] VM #4547 removed from host #0
+[583] Available ram in host #0 is 928.0GB
+[613] VM #6394 removed from host #0
+[613] Available ram in host #0 is 1024.0GB
+[613] Created VM #4632 of type m5d.8xlarge
+[613] VM #4632 assigned to host #0
+[613] Available ram in host #0 is 896.0
+[615] VM #4632 removed from host #0
+[615] Available ram in host #0 is 1024.0GB
+[615] Created VM #4888 of type m5zn.6xlarge
+[615] VM #4888 assigned to host #0
+[615] Available ram in host #0 is 928.0
+[648] VM #4888 removed from host #0
+[648] Available ram in host #0 is 1024.0GB
+[648] Created VM #2995 of type m5d.8xlarge
+[648] VM #2995 assigned to host #0
+[648] Available ram in host #0 is 896.0
+[650] Created VM #7708 of type m5zn.6xlarge
+[651] VM #7708 assigned to host #0
+[651] Available ram in host #0 is 800.0
+[652] VM #2995 removed from host #0
+[652] Available ram in host #0 is 928.0GB
+[681] Created VM #2470 of type m5d.8xlarge
+[681] VM #2470 assigned to host #0
+[681] Available ram in host #0 is 800.0
+[681] VM #7708 removed from host #0
+[682] Available ram in host #0 is 896.0GB
+[683] Created VM #7629 of type m5zn.6xlarge
+[683] VM #7629 assigned to host #0
+[684] Available ram in host #0 is 800.0
+[686] VM #2470 removed from host #0
+[687] Available ram in host #0 is 928.0GB
+[716] VM #7629 removed from host #0
+[716] Available ram in host #0 is 1024.0GB
+[717] Created VM #6210 of type m5d.8xlarge
+[717] VM #6210 assigned to host #0
+[717] Available ram in host #0 is 896.0
+[718] VM #6210 removed from host #0
+[718] Available ram in host #0 is 1024.0GB
+[719] Created VM #6011 of type m5zn.6xlarge
+[719] VM #6011 assigned to host #0
+[719] Available ram in host #0 is 928.0
+[753] Created VM #3430 of type m5d.8xlarge
+[754] VM #3430 assigned to host #0
+[754] Available ram in host #0 is 800.0
+[754] VM #6011 removed from host #0
+[755] Available ram in host #0 is 896.0GB
+[755] Created VM #5846 of type m5zn.6xlarge
+[755] VM #5846 assigned to host #0
+[755] Available ram in host #0 is 800.0
+[756] VM #3430 removed from host #0
+[756] Available ram in host #0 is 928.0GB
+[789] VM #5846 removed from host #0
+[789] Available ram in host #0 is 1024.0GB
+[790] Created VM #6706 of type m5d.8xlarge
+[790] VM #6706 assigned to host #0
+[791] Available ram in host #0 is 896.0
+[792] VM #6706 removed from host #0
+[792] Available ram in host #0 is 1024.0GB
+[792] Created VM #241 of type m5zn.6xlarge
+[792] VM #241 assigned to host #0
+[793] Available ram in host #0 is 928.0
+[825] Created VM #8759 of type m5d.8xlarge
+[825] VM #8759 assigned to host #0
+[825] Available ram in host #0 is 800.0
+[826] VM #241 removed from host #0
+[827] Available ram in host #0 is 896.0GB
+[827] Created VM #88 of type m5zn.6xlarge
+[827] VM #88 assigned to host #0
+[827] Available ram in host #0 is 800.0
+[828] VM #8759 removed from host #0
+[829] Available ram in host #0 is 928.0GB
+[847] VM #88 removed from host #0
+[848] Available ram in host #0 is 1024.0GB
+[0] Created VM #3301 of type m5.12xlarge
+[0] VM #3301 assigned to host #0
+[0] Available ram in host #0 is 832.0
+[32] Created VM #8125 of type m5zn.metal
+[33] VM #8125 assigned to host #0
+[33] Available ram in host #0 is 640.0
+[33] VM #3301 removed from host #0
+[33] Available ram in host #0 is 832.0GB
+[64] VM #8125 removed from host #0
+[65] Available ram in host #0 is 1024.0GB
+[65] Created VM #1140 of type m5.12xlarge
+[65] VM #1140 assigned to host #0
+[65] Available ram in host #0 is 832.0
+[98] VM #1140 removed from host #0
+[98] Available ram in host #0 is 1024.0GB
+[99] Created VM #9973 of type m5zn.metal
+[99] VM #9973 assigned to host #0
+[99] Available ram in host #0 is 832.0
+[132] Created VM #9734 of type m5.12xlarge
+[133] VM #9734 assigned to host #0
+[133] Available ram in host #0 is 640.0
+[133] VM #9973 removed from host #0
+[133] Available ram in host #0 is 832.0GB
+[166] Created VM #3621 of type m5zn.metal
+[167] VM #3621 assigned to host #0
+[167] Available ram in host #0 is 640.0
+[168] VM #9734 removed from host #0
+[168] Available ram in host #0 is 832.0GB
+[199] VM #3621 removed from host #0
+[200] Available ram in host #0 is 1024.0GB
+[200] Created VM #9817 of type m5.12xlarge
+[200] VM #9817 assigned to host #0
+[200] Available ram in host #0 is 832.0
+[233] Created VM #6336 of type m5zn.metal
+[233] VM #6336 assigned to host #0
+[234] Available ram in host #0 is 640.0
+[234] VM #9817 removed from host #0
+[235] Available ram in host #0 is 832.0GB
+[265] VM #6336 removed from host #0
+[266] Available ram in host #0 is 1024.0GB
+[266] Created VM #1238 of type m5.12xlarge
+[266] VM #1238 assigned to host #0
+[267] Available ram in host #0 is 832.0
+[300] VM #1238 removed from host #0
+[301] Available ram in host #0 is 1024.0GB
+[301] Created VM #6943 of type m5zn.metal
+[301] VM #6943 assigned to host #0
+[301] Available ram in host #0 is 832.0
+[331] VM #6943 removed from host #0
+[332] Available ram in host #0 is 1024.0GB
+[332] Created VM #6526 of type m5.12xlarge
+[332] VM #6526 assigned to host #0
+[332] Available ram in host #0 is 832.0
+[365] VM #6526 removed from host #0
+[365] Available ram in host #0 is 1024.0GB
+[365] Created VM #94 of type m5zn.metal
+[367] VM #94 assigned to host #0
+[367] Available ram in host #0 is 832.0

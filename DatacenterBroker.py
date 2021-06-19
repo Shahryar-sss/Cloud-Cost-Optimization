@@ -87,16 +87,13 @@ class DatacenterBroker:
                     return
 
         elif self.cloudletAllocationPolicy == "LowestSpotScoreFirst":
+
             suitableInstanceTypes = []
             for instanceType in self.instanceConfigurationData.keys():
-                if cloudlet.getHighestRamUsage() < self.instanceConfigurationData[instanceType][1]:
+                if cloudlet.getHighestRamUsage() < self.instanceConfigurationData[instanceType][1] and cloudlet.getBucket() == int(self.instanceConfigurationData[instanceType][6]):
 
                     if cloudlet.getPrevAllocatedVmType() is not None:
                         if not cloudlet.runningOnDemand and instanceType == cloudlet.getPrevAllocatedVmType():
-                            continue
-                        if cloudlet.getMigrationEvent() == "RAM" \
-                                and self.instanceConfigurationData[instanceType][1] \
-                                <= self.instanceConfigurationData[cloudlet.getPrevAllocatedVmType()][1]:
                             continue
 
                     suitableInstanceTypes.append(instanceType)
@@ -113,8 +110,13 @@ class DatacenterBroker:
                     instanceTypeWithMinSpotScore = instanceType
 
             if cloudlet.getPrevAllocatedVmType() is not None and float(self.instanceConfigurationData[instanceTypeWithMinSpotScore][4][int(migrationTime/60)]) > self.instanceConfigurationData[cloudlet.getPrevAllocatedVmType()][3]:
-                cloudlet.setRunningOnDemand(True)
-                instanceTypeWithMinSpotScore = cloudlet.getPrevAllocatedVmType()
+                if cloudlet.getBucket() == int(self.instanceConfigurationData[cloudlet.getPrevAllocatedVmType()][6]):
+                    cloudlet.setRunningOnDemand(True)
+                    instanceTypeWithMinSpotScore = cloudlet.getPrevAllocatedVmType()
+                else:
+                    if float(self.instanceConfigurationData[instanceTypeWithMinSpotScore][4][int(migrationTime/60)]) > float(self.instanceConfigurationData[instanceTypeWithMinSpotScore][3]):
+                        cloudlet.setRunningOnDemand(True)
+                        instanceTypeWithMinSpotScore = instanceTypeWithMinSpotScore
             else:
                 cloudlet.setRunningOnDemand(False)
 

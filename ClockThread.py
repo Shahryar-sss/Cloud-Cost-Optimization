@@ -44,72 +44,89 @@ class ClockThread:
 
         currentRam = self.getCurrentRam(cloudlet.getHighestRamUsage())
 
-        if currentRam > 0.9 * currentVm.getRam():
-            message = "[" + str(ClockThread.currentTime) + "] Ram utilisation threshold reached. Migrating cloudlet #" + str(cloudlet.getId())+" Ram of current allocated VM is " + str(currentVm.getRam()) + " Current ram of cloudlet " + str(currentRam)
-            printMessage("CloudletAllocationAndMigration", message)
-
-            cloudlet.setMigrationEvent("RAM")
-            cloudlet.setPrevAllocatedVmType(currentVm.getType())
-            cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "RAM")
-            cloudlet.setAllocatedVmId(None)
-            return
-
         if self.cloudletAllocationPolicy == "LowestSpotScoreFirst":
-            runtimeDistribution = cloudlet.getRuntimeDistributionOnVm()
-            if (len(runtimeDistribution) > 0 and (ClockThread.currentTime - runtimeDistribution[len(runtimeDistribution) - 1][1]) % 3600 == 0) or (len(runtimeDistribution) == 0 and ClockThread.currentTime % 3600 == 0):
 
-                suitableInstanceTypes = []
-                for instanceType in self.configurationData.keys():
-                    if cloudlet.getHighestRamUsage() < self.configurationData[instanceType][1]:
-                        suitableInstanceTypes.append(instanceType)
+            if currentRam > 0.9 * currentVm.getRam():
+                state = cloudlet.getOverUtilizedState()
 
-                minSpotScore = float('inf')
-                instanceTypeWithMinSpotScore = None
-                for instanceType in suitableInstanceTypes:
-                    if float(self.configurationData[instanceType][5][int(ClockThread.currentTime / 60)]) < minSpotScore:
-                        minSpotScore = float(self.configurationData[instanceType][5][int(ClockThread.currentTime / 60)])
-                        instanceTypeWithMinSpotScore = instanceType
+                if not state:
+                    cloudlet.setOverUtilizedState(True)
+                    cloudlet.setRamMigrationWindow(ClockThread.currentTime)
 
-                print("Current VM spot price {} and minimium spot price found {}".format(self.configurationData[currentVm.getType()][4][int(ClockThread.currentTime / 60)], self.configurationData[instanceTypeWithMinSpotScore][4][int(ClockThread.currentTime / 60)]))
-                print("instanceTypeWithMinSpotScore", instanceTypeWithMinSpotScore)
+                if state:
+                    window = cloudlet.getRamMigrationWindow()
 
-                if cloudlet.getRunningOnDemand():
+                    if ClockThread.currentTime - window[0] < 30:
+                        cloudlet.incrementRamMigrationWindowFrequency()
+                    else:
+                        if window[1] >= 0.1 * 30:
 
-                    if float(self.configurationData[instanceTypeWithMinSpotScore][4][int(ClockThread.currentTime/60)]) < self.configurationData[currentVm.getType()][3]:
-                        message = "[" + str(ClockThread.currentTime) + "] Migrating Cloudlet #" + str(cloudlet.getId()) + "from on demand vm #" + str(currentVm.getType()) + " to spot instance of type " + instanceTypeWithMinSpotScore
-                        printMessage("CloudletAllocationAndMigration", message)
+                            message = "[" + str(
+                                ClockThread.currentTime) + "] Ram utilisation threshold reached. Migrating cloudlet #" + str(
+                                cloudlet.getId()) + " Ram of current allocated VM is " + str(
+                                currentVm.getRam()) + " Current ram of cloudlet " + str(currentRam)
+                            printMessage("CloudletAllocationAndMigration", message)
 
-                        cloudlet.setMigrationEvent("SPOT_SCORE")
-                        cloudlet.setPrevAllocatedVmType(currentVm.getType())
-                        cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "SPOT_SCORE", True)
-                        cloudlet.setAllocatedVmId(None)
-                        return
+                            cloudlet.setMigrationEvent("RAM")
+                            cloudlet.setPrevAllocatedVmType(currentVm.getType())
+                            cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "RAM")
+                            cloudlet.setBucket(cloudlet.getBucket() + 1 if cloudlet.getBucket() < 4 else 4)
+                            cloudlet.setOverUtilizedState(False)
+                            cloudlet.setAllocatedVmId(None)
+                            return
 
-                else:
-                    if float(self.configurationData[currentVm.getType()][4][int(ClockThread.currentTime/60)]) > self.configurationData[currentVm.getType()][3]:
-                        message = "[" + str(ClockThread.currentTime) + "] Vm #" + str(currentVm.getId()) + " spot price has exceeded on-demand price. Migrating Cloudlet #" + str(cloudlet.getId())
-                        printMessage("CloudletAllocationAndMigration", message)
+                        else:
+                            cloudlet.setRamMigrationWindow(ClockThread.currentTime)
 
-                        cloudlet.setMigrationEvent("SPOT_SCORE")
-                        cloudlet.setPrevAllocatedVmType(currentVm.getType())
-                        cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "SPOT_SCORE")
-                        cloudlet.setAllocatedVmId(None)
-                        return
+            suitableInstanceTypes = []
+            for instanceType in self.configurationData.keys():
+                if cloudlet.getHighestRamUsage() < self.configurationData[instanceType][1] and cloudlet.getBucket() == int(self.configurationData[instanceType][6]):
+                    suitableInstanceTypes.append(instanceType)
 
-                    if float(self.configurationData[currentVm.getType()][4][int(ClockThread.currentTime/60)]) > float(self.configurationData[instanceTypeWithMinSpotScore][4][int(ClockThread.currentTime/60)]):
-                        message = "[" + str(ClockThread.currentTime) + "] Vm type " + instanceTypeWithMinSpotScore + " has lower price than Vm #" + str(currentVm.getId()) + " of type " + currentVm.getType() + ". Migrating Cloudlet #" + str(cloudlet.getId())
-                        printMessage("CloudletAllocationAndMigration", message)
+            minSpotScore = float('inf')
+            instanceTypeWithMinSpotScore = None
+            for instanceType in suitableInstanceTypes:
+                if float(self.configurationData[instanceType][5][int(ClockThread.currentTime / 60)]) < minSpotScore:
+                    minSpotScore = float(self.configurationData[instanceType][5][int(ClockThread.currentTime / 60)])
+                    instanceTypeWithMinSpotScore = instanceType
 
-                        cloudlet.setMigrationEvent("SPOT_SCORE")
-                        cloudlet.setPrevAllocatedVmType(currentVm.getType())
-                        cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "SPOT_SCORE")
-                        cloudlet.setAllocatedVmId(None)
-                        return
+            if cloudlet.getRunningOnDemand():
+
+                if float(self.configurationData[instanceTypeWithMinSpotScore][4][int(ClockThread.currentTime/60)]) < self.configurationData[currentVm.getType()][3]:
+                    message = "[" + str(ClockThread.currentTime) + "] Migrating Cloudlet #" + str(cloudlet.getId()) + "from on demand vm #" + str(currentVm.getType()) + " to spot instance of type " + instanceTypeWithMinSpotScore
+                    printMessage("CloudletAllocationAndMigration", message)
+
+                    cloudlet.setMigrationEvent("SPOT_SCORE")
+                    cloudlet.setPrevAllocatedVmType(currentVm.getType())
+                    cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "SPOT_SCORE", True)
+                    cloudlet.setAllocatedVmId(None)
+                    return
+
+            else:
+                if float(self.configurationData[currentVm.getType()][4][int(ClockThread.currentTime/60)]) > float(self.configurationData[currentVm.getType()][3]):
+                    message = "[" + str(ClockThread.currentTime) + "] Vm #" + str(currentVm.getId()) + " spot price has exceeded on-demand price. Migrating Cloudlet #" + str(cloudlet.getId())
+                    printMessage("CloudletAllocationAndMigration", message)
+
+                    cloudlet.setMigrationEvent("SPOT_SCORE")
+                    cloudlet.setPrevAllocatedVmType(currentVm.getType())
+                    cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "SPOT_SCORE")
+                    cloudlet.setAllocatedVmId(None)
+                    return
+
+                if float(self.configurationData[currentVm.getType()][4][int(ClockThread.currentTime/60)]) > float(self.configurationData[instanceTypeWithMinSpotScore][4][int(ClockThread.currentTime/60)]):
+                    message = "[" + str(ClockThread.currentTime) + "] Vm type " + instanceTypeWithMinSpotScore + " has lower price than Vm #" + str(currentVm.getId()) + " of type " + currentVm.getType() + ". Migrating Cloudlet #" + str(cloudlet.getId())
+                    printMessage("CloudletAllocationAndMigration", message)
+
+                    cloudlet.setMigrationEvent("SPOT_SCORE")
+                    cloudlet.setPrevAllocatedVmType(currentVm.getType())
+                    cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "SPOT_SCORE")
+                    cloudlet.setAllocatedVmId(None)
+                    return
 
         cloudletUpdatedLength = cloudlet.getLength()-currentVm.getMips()
         cloudletUpdatedLength = cloudletUpdatedLength if cloudletUpdatedLength > 0 else 0
         if cloudletUpdatedLength == 0:
-            cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "COMPLETED")
+            cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "COMPLETED", cloudlet.getRunningOnDemand())
 
             message = "[" + str(ClockThread.currentTime) + "] Cloudlet #" + str(cloudlet.getId()) + " has finished execution."
             printMessage("FinishedExecution", message)
@@ -118,7 +135,7 @@ class ClockThread:
 
 
     def getCurrentRam(self, averageRamUsage):
-        val = np.random.normal(loc=averageRamUsage, size=1)
+        val = np.random.normal(loc=averageRamUsage, scale=0.1*averageRamUsage, size=1)
         while val[0] <= 0:
-            val = np.random.normal(loc=averageRamUsage, size=1)
+            val = np.random.normal(loc=averageRamUsage, scale=0.1*averageRamUsage, size=1)
         return val[0]

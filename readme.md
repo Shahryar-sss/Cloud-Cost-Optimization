@@ -22,6 +22,7 @@ VALUE: LIST ->
   4. On Demand Price
   5. LIST -> Spot Prices
   6. LIST -> Spot Scores
+  7. Category of the VM
 
 ## Program Flow
 

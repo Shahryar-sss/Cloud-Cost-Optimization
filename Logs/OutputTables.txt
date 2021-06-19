@@ -1,0 +1,97 @@
+Cloudlet ID #0
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.medium   			87  		Spot				RAM      		0.00011841666666666667
+a1.2xlarge  			3453		Spot				COMPLETED		0.036839
+
+Cloudlet ID #1
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.large    			1381		Spot				COMPLETED		0.0037593888888888885
+
+Cloudlet ID #2
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.xlarge   			3304		Spot				COMPLETED		0.01808022222222222
+
+Cloudlet ID #3
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.xlarge   			2395		Spot				COMPLETED		0.013105972222222222
+
+Cloudlet ID #4
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.xlarge   			30  		Spot				RAM      		0.00016416666666666665
+a1.2xlarge  			556 		Spot				COMPLETED		0.005756777777777777
+
+Cloudlet ID #5
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.xlarge   			31  		Spot				RAM      		0.00016963888888888888
+a1.2xlarge  			849 		Spot				COMPLETED		0.008952555555555556
+
+Cloudlet ID #6
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.2xlarge  			822 		Spot				RAM      		0.008996333333333334
+m5zn.3xlarge			1467		Spot				COMPLETED		0.022359999999999998
+
+Cloudlet ID #7
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.2xlarge  			47  		Spot				RAM      		0.0005143888888888889
+m5zn.3xlarge			1511		Spot				COMPLETED		0.050752
+
+Cloudlet ID #8
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.medium   			1310		Spot				COMPLETED		0.0017830555555555555
+
+Cloudlet ID #9
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.xlarge   			1099		Spot				COMPLETED		0.006013972222222222
+
+Cloudlet ID #10
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+m5zn.6xlarge			30  		Spot				RAM      		0.001996666666666667
+m5d.8xlarge 			32  		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			65  		Spot				RAM      		0.0021963333333333336
+m5d.8xlarge 			67  		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			99  		Spot				RAM      		0.0021297777777777777
+m5d.8xlarge 			101 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			133 		Spot				RAM      		0.0021297777777777777
+m5d.8xlarge 			135 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			167 		Spot				RAM      		0.0021297777777777777
+m5d.8xlarge 			169 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			200 		Spot				RAM      		0.0020632222222222224
+m5d.8xlarge 			202 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			233 		Spot				RAM      		0.0020632222222222224
+m5d.8xlarge 			235 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			268 		Spot				RAM      		0.0021963333333333336
+m5d.8xlarge 			270 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			305 		Spot				RAM      		0.0023294444444444447
+m5d.8xlarge 			306 		Spot				SPOT_SCORE		8.869444444444444e-05
+m5zn.6xlarge			338 		Spot				RAM      		0.0021297777777777777
+m5d.8xlarge 			339 		Spot				SPOT_SCORE		8.869444444444444e-05
+m5zn.6xlarge			370 		Spot				RAM      		0.0020632222222222224
+m5d.8xlarge 			371 		Spot				SPOT_SCORE		8.869444444444444e-05
+m5zn.6xlarge			402 		Spot				RAM      		0.0020632222222222224
+m5d.8xlarge 			404 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			437 		Spot				RAM      		0.0021963333333333336
+m5d.8xlarge 			439 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			474 		Spot				RAM      		0.0023294444444444447
+m5d.8xlarge 			476 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			508 		Spot				RAM      		0.0021297777777777777
+m5d.8xlarge 			511 		Spot				SPOT_SCORE		0.00026608333333333334
+m5zn.6xlarge			544 		Spot				RAM      		0.0021963333333333336
+m5d.8xlarge 			546 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			578 		Spot				RAM      		0.0021297777777777777
+m5d.8xlarge 			580 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			612 		Spot				RAM      		0.0021297777777777777
+m5d.8xlarge 			614 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			648 		Spot				RAM      		0.002262888888888889
+m5d.8xlarge 			649 		Spot				SPOT_SCORE		8.869444444444444e-05
+m5zn.6xlarge			681 		Spot				RAM      		0.0021297777777777777
+m5d.8xlarge 			682 		Spot				SPOT_SCORE		8.869444444444444e-05
+m5zn.6xlarge			716 		Spot				RAM      		0.002262888888888889
+m5d.8xlarge 			717 		Spot				SPOT_SCORE		8.869444444444444e-05
+m5zn.6xlarge			753 		Spot				RAM      		0.002396
+m5d.8xlarge 			754 		Spot				SPOT_SCORE		8.869444444444444e-05
+m5zn.6xlarge			789 		Spot				RAM      		0.0023294444444444447
+m5d.8xlarge 			791 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			824 		Spot				RAM      		0.0021963333333333336
+m5d.8xlarge 			826 		Spot				SPOT_SCORE		0.00017738888888888888
+m5zn.6xlarge			846 		Spot				COMPLETED		0.001331111111111111
+

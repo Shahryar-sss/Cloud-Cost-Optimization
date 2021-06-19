@@ -11,6 +11,19 @@ class Cloudlet:
         self.runtimeDistributionOnVm = []
         self.runningOnDemand = False
         self.migrationEvent = None
+        self.bucket = 0
+
+        if 0 <= highestRamUsage <= 8:
+            self.bucket = 1
+        elif 9 <= highestRamUsage <= 32:
+            self.bucket = 2
+        elif 33 <= highestRamUsage <= 64:
+            self.bucket = 3
+        else:
+            self.bucket = 4
+
+        self.overUtilizedState = False
+        self.ramMigrationWindow = ()
 
     def getId(self):
         return self.id
@@ -33,6 +46,9 @@ class Cloudlet:
     def getPrevAllocatedVmType(self):
         return self.prevAllocatedVmType
 
+    def getBucket(self):
+        return self.bucket
+
     def getLength(self):
         return self.length
 
@@ -45,6 +61,12 @@ class Cloudlet:
     def setAllocatedVmId(self, allocatedVmId):
         self.allocatedVmId = allocatedVmId
 
+    def getRamMigrationWindow(self):
+        return self.ramMigrationWindow
+
+    def getOverUtilizedState(self):
+        return self.overUtilizedState
+
     def setRunningOnDemand(self, runningOnDemand):
         self.runningOnDemand = runningOnDemand
 
@@ -54,5 +76,17 @@ class Cloudlet:
     def setPrevAllocatedVmType(self, prevAllocatedVmType):
         self.prevAllocatedVmType = prevAllocatedVmType
 
+    def setBucket(self, bucket):
+        self.bucket = bucket
+
     def setMigrationEvent(self, migrationEvent):
         self.migrationEvent = migrationEvent
+
+    def setOverUtilizedState(self, overUtilizedState):
+        self.overUtilizedState = overUtilizedState
+
+    def setRamMigrationWindow(self, startTime):
+        self.ramMigrationWindow = (startTime, 1)
+
+    def incrementRamMigrationWindowFrequency(self):
+        self.ramMigrationWindow = (self.ramMigrationWindow[0], self.ramMigrationWindow[1] + 1)
