@@ -48,8 +48,8 @@ class Cloudlet:
     def setRunningOnDemand(self, runningOnDemand):
         self.runningOnDemand = runningOnDemand
 
-    def setRuntimeDistributionOnVm(self, vmType, runtimeOnVm, ondemand = False):
-        self.runtimeDistributionOnVm.append((vmType, runtimeOnVm, ondemand))
+    def setRuntimeDistributionOnVm(self, vmType, runtimeOnVm, migrationEvent, ondemand = False):
+        self.runtimeDistributionOnVm.append((vmType, runtimeOnVm, ondemand, migrationEvent))
 
     def setPrevAllocatedVmType(self, prevAllocatedVmType):
         self.prevAllocatedVmType = prevAllocatedVmType

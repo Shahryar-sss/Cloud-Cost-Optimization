@@ -29,7 +29,7 @@ Outlined below is a basic overview of the structure of the program.
 
 ### [Main.py](https://github.com/Shahryar-sss/Cloud-Cost-Optimization/blob/master/Main.py)
 
-Execution starts from this file. A datacenter is first created with appropriate characteristics. Then a datacenter broker is created, using the required VM allocation policy and cloudlet allocation policy. A list of hosts is then created and assigned to the datacenter. Finally a list of cloudlets is create dand submitted to the broker for execution.
+Execution starts from this file. A datacenter is first created with appropriate characteristics. Then a datacenter broker is created, using the required VM allocation policy and cloudlet allocation policy. A list of hosts is then created and assigned to the datacenter. Finally a list of cloudlets is created and submitted to the broker for execution.
 
 ### [DatacenterBroker.py](https://github.com/Shahryar-sss/Cloud-Cost-Optimization/blob/master/DatacenterBroker.py)
 
@@ -57,4 +57,4 @@ This thread constantly monitors the running cloudlet, and on **every clock tick*
 
 <hr/>
 
-The output of the program is printed to the console window.
+The output of the program is printed to the console window and to the appropriate log files inside the log folder.

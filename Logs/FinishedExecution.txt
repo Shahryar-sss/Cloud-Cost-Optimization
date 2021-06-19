@@ -1,0 +1,10 @@
+[4330] Cloudlet #1 has finished execution.
+
+Cloudlet ID #1
+VM TYPE		End Time		Instance Type		Migration Event
+a1.medium		1   		Spot				RAM
+a1.large		48  		Spot				RAM
+a1.xlarge		3648		Spot				SPOT_SCORE
+a1.medium		3651		Spot				RAM
+a1.large		3703		Spot				RAM
+a1.xlarge		4330		Spot				COMPLETED

@@ -1,0 +1,11 @@
+[0] Cloudlet #1 assigned to VM #2011
+[1] Ram utilisation threshold reached. Migrating cloudlet #1 Ram of current allocated VM is 2.0 Current ram of cloudlet 2.0072751615864113
+[3] Cloudlet #1 assigned to VM #2807
+[48] Ram utilisation threshold reached. Migrating cloudlet #1 Ram of current allocated VM is 4.0 Current ram of cloudlet 3.8041051382642763
+[51] Cloudlet #1 assigned to VM #7657
+[3648] Vm type a1.medium has lower price than Vm #7657 of type a1.xlarge. Migrating Cloudlet #1
+[3650] Cloudlet #1 assigned to VM #3888
+[3651] Ram utilisation threshold reached. Migrating cloudlet #1 Ram of current allocated VM is 2.0 Current ram of cloudlet 1.917951449244216
+[3652] Cloudlet #1 assigned to VM #918
+[3703] Ram utilisation threshold reached. Migrating cloudlet #1 Ram of current allocated VM is 4.0 Current ram of cloudlet 3.7963064822380748
+[3704] Cloudlet #1 assigned to VM #1041
