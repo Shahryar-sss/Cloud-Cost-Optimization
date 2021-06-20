@@ -29,9 +29,9 @@ class Main:
         demands = demandFile.readlines()
         demandParams = [demand.split(",") for demand in demands]
 
-        # for item in demandParams:
-        #     cloudletList.append(Cloudlet.Cloudlet(id=demandParams.index(item), highestRamUsage=float(item[2]), averageRamUsage=float(item[3]), length=float(item[1]), ramDistribution=item[4].split("_")))
-        cloudletList.append(Cloudlet.Cloudlet(id=6, highestRamUsage=float(demandParams[6][2]), averageRamUsage=float(demandParams[6][3]), length=float(demandParams[6][1]), ramDistribution=demandParams[6][4].split("_")))
+        for item in demandParams:
+            cloudletList.append(Cloudlet.Cloudlet(id=demandParams.index(item), highestRamUsage=float(item[2]), averageRamUsage=float(item[3]), length=float(item[1]), ramDistribution=item[4].split("_")))
+        # cloudletList.append(Cloudlet.Cloudlet(id=6, highestRamUsage=float(demandParams[6][2]), averageRamUsage=float(demandParams[6][3]), length=float(demandParams[6][1]), ramDistribution=demandParams[6][4].split("_")))
 
         broker2.submitCloudletList(cloudletList)
 

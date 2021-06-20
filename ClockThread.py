@@ -55,10 +55,10 @@ class ClockThread:
                 if state:
                     window = cloudlet.getRamMigrationWindow()
 
-                    if ClockThread.currentTime - window[0] < 30:
+                    if ClockThread.currentTime - window[0] < 10*60:
                         cloudlet.incrementRamMigrationWindowFrequency()
                     else:
-                        if window[1] >= 0.1 * 30:
+                        if window[1] >= 0.1 * 10*60:
 
                             message = "[" + str(
                                 ClockThread.currentTime) + "] Ram utilisation threshold reached. Migrating cloudlet #" + str(
