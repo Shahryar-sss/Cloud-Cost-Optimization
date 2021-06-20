@@ -3,7 +3,6 @@ import os
 import pandas as pd
 
 from PrintLogs import printMessage
-
 instanceConfigurationData = {}
 
 def instanceType():
@@ -32,6 +31,7 @@ def instanceType():
                 instanceConfigurationData[instanceName].append(spotPriceList)
                 instanceConfigurationData[instanceName].append(spotScoreList)
                 instanceConfigurationData[instanceName].append(bucket)
+
 printMessage("Misc", "Gathering instance configuration data from dataset")
 instanceType()
 

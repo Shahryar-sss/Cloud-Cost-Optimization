@@ -5,7 +5,6 @@ import Host
 import Cloudlet
 from PrintLogs import printMessage
 from InstanceConfiguration import instanceConfigurationData
-import ClockThread
 
 class Main:
 
@@ -26,12 +25,13 @@ class Main:
 
         cloudletList = []
 
-        demandFile = open("./Dataset/DemandDataMerged.csv",'r')
-        demands = demandFile.readlines()[1:]
+        demandFile = open("./Dataset/DemandDataWithRamDistribution.csv",'r')
+        demands = demandFile.readlines()
         demandParams = [demand.split(",") for demand in demands]
-
-        for item in demandParams:
-            cloudletList.append(Cloudlet.Cloudlet(id=demandParams.index(item), highestRamUsage=float(item[2]), averageRamUsage=float(item[3]), length=float(item[1])))
+        print("DEMAND RAM DIST", demandParams[6][4].split("_"))
+        # for item in demandParams:
+        #     cloudletList.append(Cloudlet.Cloudlet(id=demandParams.index(item), highestRamUsage=float(item[2]), averageRamUsage=float(item[3]), length=float(item[1]), ramDistribution=item[4].split("_")))
+        cloudletList.append(Cloudlet.Cloudlet(id=6, highestRamUsage=float(demandParams[6][2]), averageRamUsage=float(demandParams[6][3]), length=float(demandParams[6][1]), ramDistribution=demandParams[6][4].split("_")))
 
         broker2.submitCloudletList(cloudletList)
 
@@ -39,18 +39,18 @@ class Main:
             printMessage("OutputTables", "Cloudlet ID #" + str(cloudlet.getId()))
             printMessage("OutputTables", "VM TYPE\t\t\t\tEnd Time\tInstance Type\t\tMigration Event\t\tCost")
             tempRuntime=cloudlet.getRuntimeDistributionOnVm()
+            cost = 0
             for i in range(len(tempRuntime)):
 
                 timeSpentOnVM = tempRuntime[i][1]-tempRuntime[i-1][1] if i > 0 else tempRuntime[i][1]
                 startTime = tempRuntime[i-1][1] if i>0 else tempRuntime[i][1]
 
-                costOnVM = 0
                 for j in range(1, int(timeSpentOnVM/3600)+1):
-                    costOnVM += float(instanceConfigurationData[tempRuntime[i][0]][4][int(startTime/60) + j*60])
+                    cost += float(instanceConfigurationData[tempRuntime[i][0]][4][int(startTime/60) + j*60])
 
-                costOnVM += timeSpentOnVM % 3600 * float(instanceConfigurationData[tempRuntime[i][0]][4][int(timeSpentOnVM/60+startTime/60)]) / 3600
+                cost += timeSpentOnVM % 3600 * float(instanceConfigurationData[tempRuntime[i][0]][4][int(timeSpentOnVM/60+startTime/60)]) / 3600
 
-                printMessage("OutputTables", str(tempRuntime[i][0]) + (" " * (12 - len(str(tempRuntime[i][0])))) + "\t\t\t" + str(tempRuntime[i][1]) + (" " * (4 - len(str(tempRuntime[i][1])))) + "\t\t" + ("Spot" if not tempRuntime[i][2] else "On Demand") + "\t\t\t\t" + tempRuntime[i][3] + (" " * (9 - len(tempRuntime[i][3]))) + "\t\t" + str(costOnVM))
+                printMessage("OutputTables", str(tempRuntime[i][0]) + (" " * (12 - len(str(tempRuntime[i][0])))) + "\t\t\t" + str(tempRuntime[i][1]) + (" " * (4 - len(str(tempRuntime[i][1])))) + "\t\t" + ("Spot" if not tempRuntime[i][2] else "On Demand") + "\t\t\t\t" + tempRuntime[i][3] + (" " * (9 - len(tempRuntime[i][3]))) + "\t\t" + str(cost))
             printMessage("OutputTables", "\n")
 
     def createDatacenter(self, name):

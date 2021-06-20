@@ -23,6 +23,7 @@ VALUE: LIST ->
   5. LIST -> Spot Prices
   6. LIST -> Spot Scores
   7. Category of the VM
+  8. LIST -> RAM distribution
 
 ## Program Flow
 

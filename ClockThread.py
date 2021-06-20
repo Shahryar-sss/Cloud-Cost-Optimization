@@ -1,5 +1,4 @@
 import threading
-import numpy as np
 
 from PrintLogs import printMessage
 
@@ -42,7 +41,7 @@ class ClockThread:
         if currentVm is None:
             return
 
-        currentRam = self.getCurrentRam(cloudlet.getHighestRamUsage())
+        currentRam = float(self.getCurrentRam(cloudlet.getRamDistribution()))
 
         if self.cloudletAllocationPolicy == "LowestSpotScoreFirst":
 
@@ -134,8 +133,5 @@ class ClockThread:
         cloudlet.setLength(cloudletUpdatedLength)
 
 
-    def getCurrentRam(self, averageRamUsage):
-        val = np.random.normal(loc=averageRamUsage, scale=0.1*averageRamUsage, size=1)
-        while val[0] <= 0:
-            val = np.random.normal(loc=averageRamUsage, scale=0.1*averageRamUsage, size=1)
-        return val[0]
+    def getCurrentRam(self, ramDistribution):
+        return ramDistribution[int(ClockThread.currentTime/60)%len(ramDistribution)]

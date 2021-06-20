@@ -55,14 +55,6 @@ class DatacenterBroker:
             for instanceType in self.instanceConfigurationData.keys():
                 if cloudlet.getHighestRamUsage() < self.instanceConfigurationData[instanceType][1]:
 
-                    if cloudlet.getPrevAllocatedVmType() is not None:
-                        if instanceType == cloudlet.getPrevAllocatedVmType() \
-                                and cloudlet.getMigrationEvent() == "RAM" \
-                                and self.instanceConfigurationData[instanceType][1] \
-                                <= self.instanceConfigurationData[cloudlet.getPrevAllocatedVmType()][1]:
-
-                            continue
-
                     vmId = random.randint(1, 9999)
                     vmIdList = [vm.getId() for vm in self.vmList]
                     while vmId in vmIdList:

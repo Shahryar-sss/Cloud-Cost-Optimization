@@ -1,11 +1,1 @@
-[3453] Cloudlet #0 has finished execution.
-[1381] Cloudlet #1 has finished execution.
-[3304] Cloudlet #2 has finished execution.
-[2395] Cloudlet #3 has finished execution.
-[556] Cloudlet #4 has finished execution.
-[849] Cloudlet #5 has finished execution.
-[1467] Cloudlet #6 has finished execution.
-[1511] Cloudlet #7 has finished execution.
-[1310] Cloudlet #8 has finished execution.
-[1099] Cloudlet #9 has finished execution.
-[846] Cloudlet #10 has finished execution.
+[2410] Cloudlet #6 has finished execution.

@@ -1,10 +1,11 @@
 class Cloudlet:
 
-    def __init__(self, id, highestRamUsage, averageRamUsage, length):
+    def __init__(self, id, highestRamUsage, averageRamUsage, length, ramDistribution):
         self.id = id
         self.highestRamUsage = highestRamUsage
         self.averageRamUsage = averageRamUsage
         self.length = length
+        self.ramDistribution = ramDistribution
 
         self.allocatedVmId = None
         self.prevAllocatedVmType = None
@@ -69,6 +70,9 @@ class Cloudlet:
 
     def setRunningOnDemand(self, runningOnDemand):
         self.runningOnDemand = runningOnDemand
+
+    def getRamDistribution(self):
+        return self.ramDistribution
 
     def setRuntimeDistributionOnVm(self, vmType, runtimeOnVm, migrationEvent, ondemand = False):
         self.runtimeDistributionOnVm.append((vmType, runtimeOnVm, ondemand, migrationEvent))
