@@ -11,3 +11,4 @@ class Datacenter:
 
     def getHostList(self):
         return self.hostList
+

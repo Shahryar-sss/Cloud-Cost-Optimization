@@ -1,0 +1,21 @@
+[0] Created VM #9488 of type a1.2xlarge
+[0] VM #9488 assigned to host #0
+[0] Available ram in host #0 is 1008.0
+[0] Created VM #479 of type a1.4xlarge
+[0] VM #479 assigned to host #0
+[0] Available ram in host #0 is 976.0
+[0] Created VM #2009 of type a1.xlarge
+[0] VM #2009 assigned to host #0
+[0] Created VM #1412 of type m5n.4xlarge
+[0] VM #1412 assigned to host #0
+[0] Available ram in host #0 is 904.0
+[0] Available ram in host #0 is 904.0
+[0] Created VM #8554 of type a1.xlarge
+[0] VM #8554 assigned to host #0
+[0] Available ram in host #0 is 896.0
+[0] Created VM #9352 of type a1.xlarge
+[0] VM #9352 assigned to host #0
+[0] Available ram in host #0 is 888.0
+[0] Created VM #6701 of type a1.large
+[0] VM #6701 assigned to host #0
+[0] Available ram in host #0 is 884.0

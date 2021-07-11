@@ -26,6 +26,9 @@ class Cloudlet:
         self.overUtilizedState = False
         self.ramMigrationWindow = ()
 
+        self.underUtilizedState = False
+        self.lowRamMigrationWindow = ()
+
     def getId(self):
         return self.id
 
@@ -65,8 +68,14 @@ class Cloudlet:
     def getRamMigrationWindow(self):
         return self.ramMigrationWindow
 
+    def getLowRamMigrationWindow(self):
+        return self.lowRamMigrationWindow
+
     def getOverUtilizedState(self):
         return self.overUtilizedState
+
+    def getUnderUtilizedState(self):
+        return self.underUtilizedState
 
     def setRunningOnDemand(self, runningOnDemand):
         self.runningOnDemand = runningOnDemand
@@ -89,8 +98,17 @@ class Cloudlet:
     def setOverUtilizedState(self, overUtilizedState):
         self.overUtilizedState = overUtilizedState
 
+    def setUnderUtilizedState(self, underUtilizedState):
+        self.underUtilizedState = underUtilizedState
+
     def setRamMigrationWindow(self, startTime):
         self.ramMigrationWindow = (startTime, 1)
 
+    def setLowRamMigrationWindow(self, startTime):
+        self.lowRamMigrationWindow = (startTime, 1)
+
     def incrementRamMigrationWindowFrequency(self):
         self.ramMigrationWindow = (self.ramMigrationWindow[0], self.ramMigrationWindow[1] + 1)
+
+    def incrementLowRamMigrationWindowFrequency(self):
+        self.lowRamMigrationWindow = (self.lowRamMigrationWindow[0], self.lowRamMigrationWindow[1] + 1)

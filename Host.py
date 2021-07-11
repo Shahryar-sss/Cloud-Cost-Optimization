@@ -15,3 +15,4 @@ class Host:
 
     def setAvailableRam(self, availableRam):
         self.availableRam = availableRam
+

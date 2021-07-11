@@ -42,6 +42,7 @@ class ClockThread:
             return
 
         currentRam = float(self.getCurrentRam(cloudlet.getRamDistribution()))
+        slidingWindowDuration = 10*60
 
         if self.cloudletAllocationPolicy == "LowestSpotScoreFirst":
 
@@ -55,10 +56,10 @@ class ClockThread:
                 if state:
                     window = cloudlet.getRamMigrationWindow()
 
-                    if ClockThread.currentTime - window[0] < 10*60:
+                    if ClockThread.currentTime - window[0] < slidingWindowDuration:
                         cloudlet.incrementRamMigrationWindowFrequency()
                     else:
-                        if window[1] >= 0.1 * 10*60:
+                        if window[1] >= 0.1 * slidingWindowDuration:
 
                             message = "[" + str(
                                 ClockThread.currentTime) + "] Ram utilisation threshold reached. Migrating cloudlet #" + str(
@@ -70,12 +71,48 @@ class ClockThread:
                             cloudlet.setPrevAllocatedVmType(currentVm.getType())
                             cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "RAM")
                             cloudlet.setBucket(cloudlet.getBucket() + 1 if cloudlet.getBucket() < 4 else 4)
+                            cloudlet.setUnderUtilizedState(False)
                             cloudlet.setOverUtilizedState(False)
                             cloudlet.setAllocatedVmId(None)
                             return
 
                         else:
                             cloudlet.setRamMigrationWindow(ClockThread.currentTime)
+
+            currentBucket = cloudlet.getBucket()
+
+            if (currentBucket == 2 and currentRam < 0.9 * 8) or (currentBucket == 3 and currentRam < 0.9 * 32) or (currentBucket == 4 and currentRam < 0.9 * 64):
+                lowstate = cloudlet.getUnderUtilizedState()
+
+                if not lowstate:
+                    cloudlet.setUnderUtilizedState(True)
+                    cloudlet.setLowRamMigrationWindow(ClockThread.currentTime)
+
+                if lowstate:
+                    window = cloudlet.getLowRamMigrationWindow()
+
+                    if ClockThread.currentTime - window[0] < slidingWindowDuration:
+                        cloudlet.incrementLowRamMigrationWindowFrequency()
+                    else:
+                        if window[1] >= 0.1 * slidingWindowDuration:
+
+                            message = "[" + str(
+                                ClockThread.currentTime) + "] Ram underutilisation threshold reached. Migrating cloudlet #" + str(
+                                cloudlet.getId()) + " Ram of current allocated VM is " + str(
+                                currentVm.getRam()) + " Current ram of cloudlet " + str(currentRam)
+                            printMessage("CloudletAllocationAndMigration", message)
+
+                            cloudlet.setMigrationEvent("RAM")
+                            cloudlet.setPrevAllocatedVmType(currentVm.getType())
+                            cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "RAM")
+                            cloudlet.setBucket(cloudlet.getBucket() - 1 if cloudlet.getBucket() > 1 else 1)
+                            cloudlet.setUnderUtilizedState(False)
+                            cloudlet.setOverUtilizedState(False)
+                            cloudlet.setAllocatedVmId(None)
+                            return
+
+                        else:
+                            cloudlet.setLowRamMigrationWindow(ClockThread.currentTime)
 
             suitableInstanceTypes = []
             for instanceType in self.configurationData.keys():
@@ -134,4 +171,4 @@ class ClockThread:
 
 
     def getCurrentRam(self, ramDistribution):
-        return ramDistribution[int(ClockThread.currentTime/60)%len(ramDistribution)]
+        return ramDistribution[int(ClockThread.currentTime/60) % len(ramDistribution)]
