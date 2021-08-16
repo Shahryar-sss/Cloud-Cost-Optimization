@@ -1,7 +1,1 @@
-[0] Cloudlet #0 assigned to VM #9488
-[0] Cloudlet #1 assigned to VM #479
-[0] Cloudlet #2 assigned to VM #2009
-[0] Cloudlet #3 assigned to VM #1412
-[0] Cloudlet #4 assigned to VM #8554
-[0] Cloudlet #5 assigned to VM #9352
-[0] Cloudlet #6 assigned to VM #6701
+[0] Cloudlet #6 assigned to VM #2283

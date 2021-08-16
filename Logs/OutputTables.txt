@@ -1,0 +1,4 @@
+Cloudlet ID #6
+VM TYPE				End Time	Instance Type		Migration Event		Cost
+a1.large    			24103		Spot				COMPLETED		0.06561372222222223
+

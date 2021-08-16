@@ -30,6 +30,8 @@ class Main:
         demandParams = [demand.split(",") for demand in demands]
 
         for item in demandParams:
+            if demandParams.index(item) != 6:
+                continue
             cloudletList.append(Cloudlet.Cloudlet(id=demandParams.index(item), highestRamUsage=float(item[2]), averageRamUsage=float(item[3]), length=float(item[1]), ramDistribution=item[4].split("_")))
 
         broker2.submitCloudletList(cloudletList)

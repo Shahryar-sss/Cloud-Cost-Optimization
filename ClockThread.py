@@ -42,7 +42,7 @@ class ClockThread:
             return
 
         currentRam = float(self.getCurrentRam(cloudlet.getRamDistribution()))
-        slidingWindowDuration = 10*60
+        slidingWindowDuration = 30*60
 
         if self.cloudletAllocationPolicy == "LowestSpotScoreFirst":
 
@@ -69,7 +69,7 @@ class ClockThread:
 
                             cloudlet.setMigrationEvent("RAM")
                             cloudlet.setPrevAllocatedVmType(currentVm.getType())
-                            cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "RAM")
+                            cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "H_RAM")
                             cloudlet.setBucket(cloudlet.getBucket() + 1 if cloudlet.getBucket() < 4 else 4)
                             cloudlet.setUnderUtilizedState(False)
                             cloudlet.setOverUtilizedState(False)
@@ -104,7 +104,7 @@ class ClockThread:
 
                             cloudlet.setMigrationEvent("RAM")
                             cloudlet.setPrevAllocatedVmType(currentVm.getType())
-                            cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "RAM")
+                            cloudlet.setRuntimeDistributionOnVm(currentVm.getType(), ClockThread.currentTime, "L_RAM")
                             cloudlet.setBucket(cloudlet.getBucket() - 1 if cloudlet.getBucket() > 1 else 1)
                             cloudlet.setUnderUtilizedState(False)
                             cloudlet.setOverUtilizedState(False)
